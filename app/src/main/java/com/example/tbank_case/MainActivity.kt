@@ -52,18 +52,38 @@ data class SiameseCat(override val weight: Double, override val age: Int) : Cat 
 
 
 class PetShop {
-    fun idAnimal(breed: String): String {
+    fun idAnimal(breed: String, weight: Double, age: Int): Animal? {
         return when (breed.lowercase(Locale.getDefault())) {
-            "husky" -> "Dog"
-            "corgi" -> "Dog"
-            "scottish" -> "Cat"
-            "siamese" -> "Cat"
-            else -> "Unknown animal"
+            "husky" -> Husky(weight, age)
+            "corgi" -> Corgi(weight, age)
+            "scottish" -> ScottishCat(weight, age)
+            "siamese" -> SiameseCat(weight, age)
+            else -> null
         }
     }
 }
 
 
-fun main() {
+fun isAnimal(animal: Animal?): String {
+    return when(animal) {
+        is Dog -> " - это собака"
+        is Cat -> " - это кошка"
+        else -> " ,мы не знаем, что это такое"
+    }
+}
 
+fun main() {
+    val petShop = PetShop()
+    val hu = petShop.idAnimal("husky", 30.0, 12)
+    val co = petShop.idAnimal("COrgi", 12.0, 5)
+    print(co)
+    println(isAnimal(co))
+    print(hu)
+    println(isAnimal(hu))
+    val sc = petShop.idAnimal("scOttish", 30.0, 12)
+    val si = petShop.idAnimal("SIAMESE", 12.0, 5)
+    print(sc)
+    println(isAnimal(sc))
+    print(si)
+    println(isAnimal(si))
 }
